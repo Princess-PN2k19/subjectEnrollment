@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Subject Enrollment</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<style>
+    body {
+        margin: 2%;
+    }
+    .col-sm-12 {
+        background-color: #d9d9d9;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <center>
+            <div class="col-sm-12">
+                <h1>Subject Enrollment</h1>
+                <img src="https://www.clarkcountynv.gov/parks/PublishingImages/locations/icons/icon-enroll.png">
+                <form class="form-horizontal">
+                    <div class="form">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="subjectName">Subject name: </label>
+                            <div style="width: 60%;" class="col-sm-9">
+                                <input id="subject" type="text" class="form-control" placeholder="Enter subject name"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="studentName">Student Name:</label>
+                            <div style="width: 60%;" class="col-sm-9">
+                                <input id="name" type="text" class="form-control" placeholder="Enter student name"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3" for="studentName">Email:</label>
+                            <div style="width: 60%;" class="col-sm-9">
+                                <input id="email" type="email" class="form-control" placeholder="Enter email" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="control-label col-sm-3" for="studentName">Course and Year:</label>
+                            <div style="width: 61%;" class="col-sm-9">
+                                <input id="cAy" type="text" class="form-control" placeholder="Enter course and year"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <button style="width: 20%;padding: 10px;" id="enroll" class="btn btn-primary">Enroll</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </center>
+    </div>
+
+    <script>
+        $('#enroll').on("click", function (e) {
+            e.preventDefault();
+
+            if ($('#subject').val() == "" || $('#name').val() == "" || $('#email').val() == "" || $('#cAy').val() == "") {
+                alert("Please fill in all the requirements.");
+            }
+            else {
+
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost:8082/enroll",
+                    crossDomain: true,
+                    data: JSON.stringify({ name: $('#name').val(), subject: $('#subject').val(), email: $('#email').val(), course: $('#cAy').val() }),
+                })
+                // $("input").val("");
+                alert($('#name').val() + " is enrolled to class " + $('#subject').val() + "!");
+                $('input[type="text"]:not(#enroll input[type="submit"])').val("");
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>
